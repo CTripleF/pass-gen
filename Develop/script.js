@@ -2,13 +2,13 @@
 
 //use class to hold values of selected modifiers
 var criteria = {
-  length = 0,
+  len: 0,
   cases: false,
   number: false,
   specialChar: false,
   //reset funtion to set all values to a default
   reset: function() {
-    this.length = 0,
+    this.len = null,
     this.cases = false,
     this.number = false,
     this.specialChar = false
@@ -16,20 +16,29 @@ var criteria = {
 }
 
 //ask for password length and verify valid input
-function checkLengthInp()
+function checkInpLength()
 {
-  criteria.length = window.prompt ("How long would you like your password to be(min of 8 max of 128)");
-  if ((criteria.length%1) != 0 || criteria.length < 8 || criteria.legth > 128) {
-    alert("invalid input numbers");
-    checkLengthInp();
+  criteria.len = window.prompt ("How long would you like your password to be(min of 8 max of 128)");
+  if ((criteria.len%1) != 0 || criteria.len < 8 || criteria.len > 128) {
+    alert("invalid input");
+    checkInpLength();
   }
   else{}
 }
 
 function checkCriteria() {
-  criteria.cases =  window.confirm("Would you like to use upper and lower case letters?")
-  criteria.number =  window.confirm("Would you like to include numbers?")
-  criteria.specialChar = window.confirm("Would you like to include special characters?")
+  while(criteria.cases === false && criteria.number ===false  && criteria.specialChar === false) {
+    criteria.cases =  window.confirm("Would you like to use upper and lower case letters?")
+    criteria.number =  window.confirm("Would you like to include numbers?")
+    criteria.specialChar = window.confirm("Would you like to include special characters?")
+    
+    if (criteria.cases === false && criteria.number === false  && criteria.specialChar === false) {
+      window.alert("Please select at least one modifier.");
+    }
+    else {
+      break;
+    }
+  }
 }
 
 function randomize () {
@@ -63,28 +72,29 @@ function randomize () {
     parameter = parameter1 + parameter2
   }
 
-  //loop through criteria.length using Math.random and appropriate parameter to create a password
-  for (i = 0; i < criteria.length; i++ ){
+  //loop through criteria.len using Math.random and appropriate parameter to create a password
+  for (i = 0; i < criteria.len; i++ ){
     var newChar = Math.floor(Math.random() * (parameter.length + 1));
     password = password + parameter.charAt(newChar);
     console.log(newChar);
   }
+  //reset modifiers
+  criteria.reset();
   return password;
 }
 
 
 function generatePassword() {
-  checkLengthInp();
-  //repeat modifier selection until at least one is chosen
-  while(criteria.cases === false && criteria.number ===false  && criteria.specialChar === false) {
-    criteria.reset();
-    checkCriteria();
-    window.alert("Please select at least one modifier.");
-  }
+  //debugger;
+  console.log(criteria.len)
+  checkInpLength();
 
+  checkCriteria();
+
+  console.log(criteria.len)
   var result = randomize();
   return result;
-}
+  }
 
 
 // Get references to the #generate element
