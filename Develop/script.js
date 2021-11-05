@@ -76,12 +76,8 @@ function randomize () {
 
 
 function generatePassword() {
-  console.log(criteria.len)
   checkInpLength();
-
   checkCriteria();
-
-  console.log(criteria.len)
   var result = randomize();
   return result;
   }
