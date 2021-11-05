@@ -8,7 +8,7 @@ var criteria = {
   specialChar: false,
   //reset funtion to set all values to a default
   reset: function() {
-    this.len = null,
+    this.len = 0,
     this.cases = false,
     this.number = false,
     this.specialChar = false
@@ -74,9 +74,9 @@ function randomize () {
 
   //loop through criteria.len using Math.random and appropriate parameter to create a password
   for (i = 0; i < criteria.len; i++ ){
-    var newChar = Math.floor(Math.random() * (parameter.length + 1));
-    password = password + parameter.charAt(newChar);
-    console.log(newChar);
+    var newPass = Math.floor(Math.random() * (parameter.length + 1));
+    password = password + parameter.charAt(newPass);
+    console.log(newPass);
   }
   //reset modifiers
   criteria.reset();
