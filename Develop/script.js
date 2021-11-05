@@ -3,15 +3,17 @@
 //use class to hold values of selected modifiers
 var criteria = {
   len: 0,
-  cases: false,
+  upper: false,
   number: false,
   specialChar: false,
+  parameters: "",
   //reset funtion to set all values to a default
   reset: function() {
     this.len = 0,
-    this.cases = false,
+    this.upper = false,
     this.number = false,
     this.specialChar = false
+    this.parameters = ""
   }
 }
 
@@ -27,55 +29,44 @@ function checkInpLength()
 }
 
 function checkCriteria() {
-  while(criteria.cases === false && criteria.number ===false  && criteria.specialChar === false) {
-    criteria.cases =  window.confirm("Would you like to use upper and lower case letters?")
+  while(criteria.upper === false && criteria.number ===false  && criteria.specialChar === false) {
+    criteria.upper =  window.confirm("Would you like to include Upper case letters?")
     criteria.number =  window.confirm("Would you like to include numbers?")
     criteria.specialChar = window.confirm("Would you like to include special characters?")
     
-    if (criteria.cases === false && criteria.number === false  && criteria.specialChar === false) {
+    if (criteria.upper === false && criteria.number === false  && criteria.specialChar === false) {
       window.alert("Please select at least one modifier.");
     }
     else {
       break;
     }
   }
+
+  var parameterlower = "abcdefghijklmnopqrstuvwxyz";
+  var parameterCap = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  var parameterNum = "0123456789";
+  var parameterSpec = "!@#$%^&*()_+-=";
+  //default parameter to lower case alphabet
+  criteria.parameters= parameterlower;
+
+  //check for possible combinations of password modifiers and apply selections to parameter
+  if (criteria.upper) {
+    criteria.parameters = criteria.parameters + parameterCap;
+  }
+  if (criteria.number) {
+    criteria.parameters = criteria.parameters + parameterNum;
+  }
+  if (criteria.specialChar) {
+    criteria.parameters = criteria.parameters + parameterSpec;
+  }
 }
 
 function randomize () {
-  var parameter="";
-  var parameter1 = "abcdefghijklmnopqrstuvwxyz";
-  var parameter2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  var parameter3 = "0123456789";
-  var parameter4 = "!@#$%^&*()_+-=";
-  var password="";
-
-  //check for possible combinations of password modifiers and apply selections to parameter
-  if (criteria.cases && criteria.number && criteria.specialChar) {
-    parameter = parameter1 + parameter2 + parameter3 + parameter4
-  }
-  else if (criteria.cases && criteria.number && criteria.specialChar === false ) {
-    parameter = parameter1 + parameter2 + parameter3
-  }
-  else if (criteria.cases && criteria.number === false && criteria.specialChar) {
-    parameter = parameter1 + parameter2 + parameter4
-  }
-  else if (criteria.cases === false && criteria.number && criteria.specialChar) {
-    parameter = parameter1 + parameter3 + parameter4
-  }
-  else if (criteria.cases === false && criteria.number === false && criteria.specialChar) {
-    parameter = parameter1 + parameter4
-  }
-  else if (criteria.cases == false && criteria.number && criteria.specialChar === false){
-    parameter = parameter1 + parameter3
-  }
-  else {
-    parameter = parameter1 + parameter2
-  }
-
+  var password = "";
   //loop through criteria.len using Math.random and appropriate parameter to create a password
   for (i = 0; i < criteria.len; i++ ){
-    var newPass = Math.floor(Math.random() * (parameter.length + 1));
-    password = password + parameter.charAt(newPass);
+    var newPass = Math.floor(Math.random() * (criteria.parameters.length + 1));
+    password = password + criteria.parameters.charAt(newPass);
     console.log(newPass);
   }
   //reset modifiers
@@ -85,7 +76,6 @@ function randomize () {
 
 
 function generatePassword() {
-  //debugger;
   console.log(criteria.len)
   checkInpLength();
 
