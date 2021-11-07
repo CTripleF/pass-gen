@@ -12,12 +12,12 @@ var criteria = {
     this.len = 0,
     this.upper = false,
     this.number = false,
-    this.specialChar = false
+    this.specialChar = false,
     this.parameters = ""
   }
 }
 
-//ask for password length and verify valid input
+//ask for password length and verify valid input using recursive function
 function checkInpLength()
 {
   criteria.len = window.prompt ("How long would you like your password to be(min of 8 max of 128)");
@@ -28,6 +28,7 @@ function checkInpLength()
   else{}
 }
 
+//ask for password modifying criteria
 function checkCriteria() {
   while(criteria.upper === false && criteria.number ===false  && criteria.specialChar === false) {
     criteria.upper =  window.confirm("Would you like to include Upper case letters?")
@@ -61,9 +62,9 @@ function checkCriteria() {
   }
 }
 
+//loop through criteria.len using Math.random and appropriate parameter to create a password
 function randomize () {
   var password = "";
-  //loop through criteria.len using Math.random and appropriate parameter to create a password
   for (i = 0; i < criteria.len; i++ ){
     var newPass = Math.floor(Math.random() * (criteria.parameters.length + 1));
     password = password + criteria.parameters.charAt(newPass);
