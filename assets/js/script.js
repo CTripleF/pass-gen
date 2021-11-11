@@ -3,6 +3,7 @@
 //use class to hold values of selected modifiers
 var criteria = {
   len: 0,
+  lower: false,
   upper: false,
   number: false,
   specialChar: false,
@@ -10,6 +11,7 @@ var criteria = {
   //reset funtion to set all values to a default
   reset: function() {
     this.len = 0,
+    this.lower = false,
     this.upper = false,
     this.number = false,
     this.specialChar = false,
@@ -30,12 +32,13 @@ function checkInpLength()
 
 //ask for password modifying criteria
 function checkCriteria() {
-  while(criteria.upper === false && criteria.number ===false  && criteria.specialChar === false) {
+  while(criteria.lower === false && criteria.upper === false && criteria.number ===false  && criteria.specialChar === false) {
+    criteria.upper =  window.confirm("Would you like to include lower case letters?")
     criteria.upper =  window.confirm("Would you like to include Upper case letters?")
     criteria.number =  window.confirm("Would you like to include numbers?")
     criteria.specialChar = window.confirm("Would you like to include special characters?")
     
-    if (criteria.upper === false && criteria.number === false  && criteria.specialChar === false) {
+    if (criteria.lower === false && criteria.upper === false && criteria.number === false  && criteria.specialChar === false) {
       window.alert("Please select at least one modifier.");
     }
     else {
@@ -48,9 +51,11 @@ function checkCriteria() {
   var parameterNum = "0123456789";
   var parameterSpec = "!@#$%^&*()_+-=";
   //default parameter to lower case alphabet
-  criteria.parameters= parameterlower;
 
   //check for possible combinations of password modifiers and apply selections to parameter
+  if (criteria.lower) {
+    criteria.parameters = criteria.parameters + parameterlower;
+  }
   if (criteria.upper) {
     criteria.parameters = criteria.parameters + parameterCap;
   }
